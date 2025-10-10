@@ -35,8 +35,11 @@ export const CTA = () => {
               size="lg" 
               variant="outline" 
               className="text-lg px-10 hover:border-primary transition-all"
+              asChild
             >
-              Ver Demo en Vivo
+              <a href="https://www.youtube.com/watch?v=94Lp6Zbwv7Y" target="_blank" rel="noopener noreferrer">
+                Ver Demo en Vivo
+              </a>
             </Button>
           </div>
 
