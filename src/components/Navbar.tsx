@@ -70,8 +70,8 @@ export const Navbar = () => {
               Beneficios
             </a>
             
-            <Button className="bg-gradient-hero hover:shadow-glow transition-all">
-              Prueba Gratis
+            <Button asChild className="bg-gradient-hero hover:shadow-glow transition-all">
+              <a href="#contacto">Solicita una demo</a>
             </Button>
           </div>
 
@@ -118,7 +118,11 @@ export const Navbar = () => {
               Beneficios
             </a>
             <div className="px-4">
-              <Button className="w-full bg-gradient-hero">Prueba Gratis</Button>
+              <Button asChild className="w-full bg-gradient-hero">
+                <a href="#contacto" onClick={() => setIsOpen(false)}>
+                  Solicita una demo
+                </a>
+              </Button>
             </div>
           </div>
         )}

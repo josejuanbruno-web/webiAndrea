@@ -38,9 +38,15 @@ export const Hero = () => {
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button size="lg" className="bg-gradient-hero hover:shadow-glow transition-all text-lg px-8">
-              <Phone className="w-5 h-5 mr-2" />
-              Prueba Gratis
+            <Button
+              asChild
+              size="lg"
+              className="bg-gradient-hero hover:shadow-glow transition-all text-lg px-8"
+            >
+              <a href="#contacto">
+                <Phone className="w-5 h-5 mr-2" />
+                Solicita una demo
+              </a>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-8 hover:border-primary transition-all">
               Ver Demo
