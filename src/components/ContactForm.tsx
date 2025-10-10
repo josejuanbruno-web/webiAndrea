@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -46,9 +46,27 @@ export const ContactForm = () => {
     console.log("Form submitted:", data);
 
     try {
-      // TODO: Send email and trigger webhook
-      // For now, just simulate success
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch(
+        "https://services.thehotels.tv/webhook/pruebazammad2",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            source: "webiAndrea-contact-form",
+            submittedAt: new Date().toISOString(),
+            payload: data,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          errorText || `Webhook request failed with status ${response.status}`,
+        );
+      }
 
       toast({
         title: "¡Solicitud Enviada!",
@@ -161,7 +179,7 @@ export const ContactForm = () => {
                   <FormItem>
                     <FormLabel>¿En qué podemos ayudarte? (opcional)</FormLabel>
                     <FormControl>
-                      <Textarea 
+                      <Textarea
                         placeholder="Cuéntanos sobre tu necesidad..."
                         className="min-h-[100px] resize-none"
                         {...field}
