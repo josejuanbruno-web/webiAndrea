@@ -16,24 +16,24 @@ export const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Agentes virtuales con IA</span>
+            <span className="text-sm font-medium text-primary">Asistente virtual de voz con IA</span>
           </div>
 
           {/* Main headline */}
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            <span className="block text-foreground">Llamadas telefónicas con IA,</span>
+            <span className="block text-foreground">iAndrea responde por ti,</span>
             <span className="block mt-2">
-              al{" "}
               <span className="bg-gradient-hero bg-clip-text text-transparent">
-                servicio de tu negocio
+                agenda por ti
               </span>
+              {" "}y nunca pierde una oportunidad
             </span>
           </h1>
 
           {/* Subheadline */}
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
-            Automatiza tu atención telefónica 24/7 con agentes virtuales inteligentes. 
-            Ingeniería a medida que entiende, responde y resuelve.
+            Convierte llamadas en reservas, citas y leads calificados. 
+            Libera a tu equipo para centrarse en lo que realmente importa.
           </p>
 
           {/* CTA buttons */}
@@ -51,15 +51,15 @@ export const Hero = () => {
           <div className="flex flex-wrap items-center justify-center gap-8 pt-12 opacity-60">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium">Configuración en minutos</span>
+              <span className="text-sm font-medium">Atención simultánea ilimitada</span>
             </div>
             <div className="flex items-center gap-2">
               <Phone className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium">99.9% disponibilidad</span>
+              <span className="text-sm font-medium">Integración con CRM y calendarios</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium">Soporte en español</span>
+              <span className="text-sm font-medium">+15 idiomas disponibles</span>
             </div>
           </div>
         </div>

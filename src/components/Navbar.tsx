@@ -34,7 +34,7 @@ export const Navbar = () => {
               <Phone className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-              VoiceAgent AI
+              iAndrea
             </span>
           </div>
 

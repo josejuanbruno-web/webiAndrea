@@ -11,12 +11,12 @@ export const Footer = () => {
                 <Phone className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                VoiceAgent AI
+                iAndrea
               </span>
             </div>
             <p className="text-muted-foreground max-w-sm">
-              Automatiza tu atención telefónica con agentes virtuales inteligentes. 
-              Ingeniería a medida para tu negocio.
+              Asistente virtual de voz con IA que responde, agenda y convierte 
+              cada llamada en una oportunidad de negocio.
             </p>
           </div>
 
@@ -42,7 +42,7 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-border text-center text-muted-foreground text-sm">
-          <p>© 2025 VoiceAgent AI. Todos los derechos reservados.</p>
+          <p>© 2025 iAndrea. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

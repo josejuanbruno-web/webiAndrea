@@ -3,33 +3,33 @@ import { Clock, TrendingUp, Shield, Zap, Users, Globe } from "lucide-react";
 const benefits = [
   {
     icon: Clock,
-    title: "Disponibilidad 24/7",
-    description: "Tu equipo nunca duerme. Atiende llamadas a cualquier hora del día o la noche.",
+    title: "Nunca Pierdas una Llamada",
+    description: "iAndrea atiende 24/7. Ninguna oportunidad de negocio se escapa, incluso fuera de horario.",
   },
   {
     icon: TrendingUp,
-    title: "Escalabilidad Infinita",
-    description: "Gestiona 1 o 10,000 llamadas simultáneas sin contratar más personal.",
+    title: "Convierte Atención en Ventas",
+    description: "Transforma cada llamada en una reserva, cita o lead calificado de forma automática.",
   },
   {
     icon: Shield,
-    title: "Seguridad y Privacidad",
-    description: "Cumplimiento GDPR y encriptación de datos sensibles en todas las conversaciones.",
+    title: "Integración Total",
+    description: "Conecta con tu CRM, agendas Apple, Microsoft, Google y sistemas de reservas existentes.",
   },
   {
     icon: Zap,
-    title: "Implementación Rápida",
-    description: "Configura tu agente virtual en minutos y empieza a atender llamadas hoy mismo.",
+    title: "Atención Simultánea",
+    description: "Gestiona múltiples llamadas al mismo tiempo sin colapsar ni perder precisión.",
   },
   {
     icon: Users,
-    title: "Experiencia Natural",
-    description: "Conversaciones fluidas con IA que entiende contexto, sentimientos y necesidades.",
+    title: "Libera a tu Equipo",
+    description: "Automatiza tareas repetitivas para que tu equipo se centre en decisiones estratégicas.",
   },
   {
     icon: Globe,
-    title: "Multiidioma",
-    description: "Atiende en español, inglés, francés y más de 20 idiomas adicionales.",
+    title: "Personalización por Sector",
+    description: "Configurable según las necesidades específicas de tu industria y procesos.",
   },
 ];
 
@@ -41,12 +41,12 @@ export const Benefits = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             ¿Por qué elegir{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
-              VoiceAgent AI
+              iAndrea
             </span>
             ?
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Tecnología de vanguardia al servicio de tu negocio
+            La aliada perfecta para tus comunicaciones empresariales
           </p>
         </div>
 
