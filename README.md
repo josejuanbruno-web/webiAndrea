@@ -34,4 +34,16 @@ npm run build
 npm run preview
 ```
 
+## Despliegue (Docker)
+
+El sitio se despliega en `https://iandrea.ai` como contenedores Docker (Nginx + Certbot,
+con renovación automática del certificado cada 24h). Instrucciones completas en
+[deploy/README.md](./deploy/README.md).
+
+```sh
+export CERTBOT_EMAIL=tu-email@ejemplo.com
+./deploy/init-letsencrypt.sh   # solo la primera vez en un servidor nuevo
+docker compose up -d --build   # despliegues siguientes
+```
+
 Más contexto del proyecto, decisiones y pendientes en [CLAUDE.md](./CLAUDE.md).
