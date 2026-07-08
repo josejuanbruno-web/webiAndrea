@@ -7,8 +7,8 @@ llamadas telefónicas (recepción, reservas, soporte, ventas), operado por **Com
 (dominio matriz `comunica.com`). Dominio de producción previsto: `iandrea.ai` (ver `robots.txt` /
 `sitemap.xml`, aún apuntan ahí aunque no esté desplegado todavía).
 
-Origen: plantilla generada con **Lovable** (`vite_react_shadcn_ts`, `lovable-tagger` en devDependencies).
 Stack: Vite + React 18 + TypeScript + Tailwind + shadcn/ui (Radix) + react-router-dom + react-hook-form + zod.
+Desplegado como contenedores Docker (Nginx + Certbot) — ver sección 4.
 
 - `src/pages/Index.tsx` → orquesta: `Navbar`, `Hero`, `Industries`, `Benefits`, `ContactForm`, `CTA`, `Footer`.
 - `src/pages/AvisoLegal.tsx`, `src/pages/Cookies.tsx` — legales, delegan detalle a comunica.com.
@@ -95,6 +95,18 @@ hacer una verificación visual en navegador real dentro de este entorno (sin `ch
 en esta máquina) — **queda pendiente que el usuario lo valide visualmente en local (`npm run dev`) o
 en un preview de producción antes de publicar**.
 
+**Estado:** todo lo anterior está commiteado y pusheado a `origin/main` (commits `583e3f5` y `7be94ca`).
+
+Durante el push se descubrió un commit remoto que no existía en local: `f4f58f7 "feat: Enable Cloud
+backend"`, hecho por el bot de Lovable (`gpt-engineer-app[bot]`) el 2025-10-27. Activaba un proyecto
+Supabase (`nfyjhpuketwhqvnidack`) **commiteando un `.env` con sus credenciales** (anon/publishable key,
+no una service key) y añadiendo un cliente Supabase que no se usaba en ningún componente. Se decidió
+descartar esa integración al hacer el merge (commit `7be94ca`): se eliminaron `.env`,
+`src/integrations/supabase/*`, `supabase/config.toml` y la dependencia `@supabase/supabase-js`, y se
+añadió una regla `.env` explícita en `.gitignore` para que no vuelva a pasar. Si en el futuro se
+decide usar Supabase de verdad, conviene rotar esa clave desde el dashboard antes de reactivarlo,
+ya que estuvo expuesta en el historial de un repo público.
+
 ---
 
 ## 1. Pendiente de decisión del usuario (no resuelto por la limpieza, requiere input del negocio)
@@ -109,8 +121,9 @@ en un preview de producción antes de publicar**.
   aunque se cambie ahora.
 - **Teléfono/email de contacto real**: no hay ningún dato de contacto directo en la web, solo el
   formulario. ¿Existe ya uno que se pueda mostrar?
-- **Dominio `iandrea.com`**: el sitemap, robots.txt y los metadatos OG ya asumen ese dominio — confirmar
-  que se va a usar ese antes de publicar (si no, hay que actualizar esas referencias).
+- **Dominio**: confirmado como `iandrea.ai` (usado en `sitemap.xml`, `robots.txt`, metadatos OG de
+  `index.html` y en el despliegue Docker de la sección 4). Si en algún momento cambia, hay que
+  actualizar esos 4 sitios a la vez.
 - **Prueba social**: no hay testimonios, logos de clientes ni cifras verificables — todo el copy de
   beneficios ("reduce el ausentismo un 40%", "absorbe el 80% de las consultas") son afirmaciones propias
   sin fuente. Esto no se ha tocado en la limpieza porque requiere contenido real del negocio (testimonios,
@@ -156,9 +169,47 @@ npm run lint      # eslint
 npx tsc --noEmit  # typecheck
 ```
 
+---
+
+## 4. Despliegue Docker (sesión 2026-07-08, commit `00b6037`)
+
+El sitio se despliega como 2 contenedores Docker en el dominio `https://iandrea.ai`:
+
+- **`web`** (`Dockerfile` + `deploy/nginx.conf`): build multi-stage — Node compila la SPA
+  (`npm run build`), Nginx la sirve. Escucha en 80 (redirige a 443) y 443 (TLS). Incluye cabeceras
+  de seguridad, cache de `/assets/`, y fallback de SPA (`try_files ... /index.html`) para que
+  react-router funcione en rutas directas.
+- **`certbot`** (`deploy/certbot/entrypoint.sh`): emite el certificado de Let's Encrypt para
+  `iandrea.ai`/`www.iandrea.ai` si no existe, y luego **comprueba cada 24h** si toca renovar
+  (`certbot renew` es no-op salvo que falten ≤30 días para expirar).
+
+**Arranque en frío** (`deploy/init-letsencrypt.sh` + `deploy/nginx-bootstrap.conf`): la primera vez
+que se despliega en un servidor, Nginx no puede levantar el bloque 443 sin un certificado ya emitido,
+y Certbot no puede emitirlo sin que Nginx sirva el challenge HTTP-01 en el puerto 80. El script
+resuelve esto: levanta un Nginx temporal solo-puerto-80, emite el certificado, y luego lanza el
+stack definitivo. Instrucciones completas en `deploy/README.md`.
+
+**Nota de build:** el `Dockerfile` usa `node:20-slim` (no Alpine) y **no copia `package-lock.json`**
+al contenedor — se regenera con `npm install` dentro del build. Esto evita un bug conocido de npm
+(https://github.com/npm/cli/issues/4828) donde un lockfile generado en otra plataforma (Windows, en
+este caso) resuelve el binario nativo equivocado de Rollup (`@rollup/rollup-linux-x64-gnu` vs
+`-musl` vs el de Windows) y `npm ci` falla al arrancar Vite dentro del contenedor Linux. Verificado
+con `docker build` real en este entorno: compila limpio y Nginx arranca correctamente.
+
+**Pendiente de decisión del usuario:** el DNS de `iandrea.ai`/`www.iandrea.ai` debe apuntar ya a la
+IP del servidor de producción antes de ejecutar `init-letsencrypt.sh` (Let's Encrypt valida el
+dominio contactando el puerto 80 desde fuera) — no se ha podido probar la emisión real del
+certificado en este entorno de desarrollo por no tener el dominio ni un servidor público accesible.
+
+---
+
 ## Notas de sesión / historial relevante
 
 - Commits previos muestran que el CTA principal pasó de decir "Gratis" a "Demo" (`35e1c0d`), y que
   el webhook se añadió en `7c90c4f` — es una integración relativamente nueva, no legacy.
-- Sesión 2026-07-08: auditoría completa + limpieza de restos de Lovable + fixes de conversión/seguridad/SEO
-  descritos en la sección 0. Cambios aún sin commitear en git al cierre de la sesión.
+- Sesión 2026-07-08 (parte 1): auditoría completa + limpieza de restos de Lovable + fixes de
+  conversión/seguridad/SEO (sección 0). Commiteado y pusheado (`583e3f5`, merge `7be94ca` que
+  descarta la integración Supabase suelta de Lovable).
+- Sesión 2026-07-08 (parte 2): stack de despliegue Docker con Nginx + Certbot para `iandrea.ai`
+  (sección 4). Commiteado y pusheado (`00b6037`). Este `CLAUDE.md` debe mantenerse actualizado en
+  cada sesión que toque el proyecto — no dejarlo desincronizado del estado real del repo.
