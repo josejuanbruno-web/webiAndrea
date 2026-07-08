@@ -14,7 +14,7 @@ fi
 cd "$(dirname "$0")/.."
 
 echo "== 1/3: arrancando nginx en modo bootstrap (solo puerto 80) =="
-docker compose run --rm -d \
+docker compose run --rm -d --no-deps \
     --name iandrea-nginx-bootstrap \
     -p 80:80 \
     -v "$(pwd)/deploy/nginx-bootstrap.conf:/etc/nginx/conf.d/default.conf:ro" \
@@ -24,7 +24,7 @@ docker compose run --rm -d \
 sleep 3
 
 echo "== 2/3: solicitando certificado con certbot =="
-docker compose run --rm \
+docker compose run --rm --no-deps \
     -e CERTBOT_EMAIL="$CERTBOT_EMAIL" \
     --entrypoint "certbot certonly --webroot --webroot-path=/var/www/certbot --email $CERTBOT_EMAIL --agree-tos --no-eff-email -d $DOMAIN -d $WWW_DOMAIN" \
     certbot
