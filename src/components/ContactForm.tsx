@@ -5,8 +5,9 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { Phone, Mail, Building2, ArrowRight } from "lucide-react";
+import { Smartphone, AtSign, Briefcase, Send } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -22,6 +23,11 @@ const formSchema = z.object({
   phone: z.string().min(9, "Teléfono inválido").max(20),
   company: z.string().max(100).optional(),
   message: z.string().max(500).optional(),
+  consent: z.literal(true, {
+    errorMap: () => ({ message: "Debes aceptar la política de privacidad para continuar" }),
+  }),
+  // Honeypot: campo oculto para usuarios humanos, los bots suelen rellenar todos los inputs.
+  website: z.string().max(0).optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -38,12 +44,19 @@ export const ContactForm = () => {
       phone: "",
       company: "",
       message: "",
+      consent: undefined,
+      website: "",
     },
   });
 
   const onSubmit = async (data: FormData) => {
+    // Honeypot: si un bot ha rellenado este campo oculto, descartamos el envío silenciosamente.
+    if (data.website) {
+      return;
+    }
+
     setIsSubmitting(true);
-    console.log("Form submitted:", data);
+    const { website, consent, ...payload } = data;
 
     try {
       const response = await fetch(
@@ -56,7 +69,7 @@ export const ContactForm = () => {
           body: JSON.stringify({
             source: "webiAndrea-contact-form",
             submittedAt: new Date().toISOString(),
-            payload: data,
+            payload,
           }),
         }
       );
@@ -128,7 +141,7 @@ export const ContactForm = () => {
                       <FormLabel>Email *</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                          <AtSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <Input className="pl-10" placeholder="tu@empresa.com" {...field} />
                         </div>
                       </FormControl>
@@ -145,7 +158,7 @@ export const ContactForm = () => {
                       <FormLabel>Teléfono *</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                          <Smartphone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                           <Input className="pl-10" placeholder="+34 600 000 000" {...field} />
                         </div>
                       </FormControl>
@@ -163,7 +176,7 @@ export const ContactForm = () => {
                     <FormLabel>Empresa (opcional)</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <Input className="pl-10" placeholder="Nombre de tu empresa" {...field} />
                       </div>
                     </FormControl>
@@ -190,6 +203,43 @@ export const ContactForm = () => {
                 )}
               />
 
+              {/* Honeypot anti-spam: oculto para humanos, los bots suelen rellenarlo */}
+              <div className="absolute left-[-9999px]" aria-hidden="true">
+                <label htmlFor="website">No rellenar este campo</label>
+                <input
+                  type="text"
+                  id="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  {...form.register("website")}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="consent"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start gap-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value === true}
+                        onCheckedChange={(checked) => field.onChange(checked === true)}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel className="font-normal text-sm text-muted-foreground">
+                        He leído y acepto la{" "}
+                        <a href="/aviso-legal" className="text-primary underline hover:no-underline">
+                          política de privacidad
+                        </a>{" "}
+                        y el tratamiento de mis datos para poder contactarme. *
+                      </FormLabel>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+
               <Button
                 type="submit"
                 size="lg"
@@ -197,7 +247,7 @@ export const ContactForm = () => {
                 className="w-full bg-gradient-hero hover:shadow-glow transition-all text-lg group"
               >
                 {isSubmitting ? "Enviando..." : "Solicitar Demo Personalizada"}
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" />
               </Button>
 
               <p className="text-sm text-muted-foreground text-center">

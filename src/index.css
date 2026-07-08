@@ -8,80 +8,54 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* Dark theme by default - matching comunica.com/iandrea style */
     --background: 0 0% 100%;
-    --foreground: 240 10% 15%;
+    --foreground: 220 15% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 15%;
+    --card-foreground: 220 15% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 15%;
+    --popover-foreground: 220 15% 15%;
 
-    --primary: 262 83% 58%;
-    --primary-foreground: 0 0% 100%;
+    /* Cyan/Turquoise primary - matching iAndrea brand */
+    --primary: 185 80% 50%;
+    --primary-foreground: 220 20% 8%;
     
-    --primary-light: 262 90% 70%;
-    --primary-glow: 262 100% 85%;
+    --primary-light: 185 85% 60%;
+    --primary-glow: 185 100% 70%;
 
-    --secondary: 240 5% 96%;
-    --secondary-foreground: 240 10% 15%;
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 15%;
 
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 4% 46%;
+    --muted: 220 10% 96%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 280 85% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 200 80% 55%;
+    --accent-foreground: 220 20% 8%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --ring: 262 83% 58%;
+    --border: 220 10% 90%;
+    --input: 220 10% 90%;
+    --ring: 185 80% 50%;
 
     --radius: 0.75rem;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(262 83% 58%), hsl(280 85% 60%));
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(240 5% 98%));
-    --gradient-accent: linear-gradient(135deg, hsl(280 85% 60%), hsl(300 80% 65%));
+    /* Gradients - Cyan to Blue */
+    --gradient-hero: linear-gradient(135deg, hsl(185 80% 50%), hsl(200 80% 55%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 10% 98%));
+    --gradient-accent: linear-gradient(135deg, hsl(185 80% 50%), hsl(170 75% 45%));
+    --gradient-subtle: linear-gradient(180deg, hsl(220 15% 98%), hsl(220 15% 95%));
     
     /* Shadows */
-    --shadow-soft: 0 2px 20px -2px hsl(262 83% 58% / 0.15);
-    --shadow-glow: 0 0 40px hsl(262 100% 85% / 0.3);
+    --shadow-soft: 0 2px 20px -2px hsl(185 80% 50% / 0.15);
+    --shadow-glow: 0 0 40px hsl(185 100% 60% / 0.3);
+    --shadow-elegant: 0 8px 32px hsl(220 20% 0% / 0.1);
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .dark {
-    --background: 240 10% 6%;
-    --foreground: 0 0% 98%;
-
-    --card: 240 8% 10%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 8% 10%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 262 83% 58%;
-    --primary-foreground: 0 0% 100%;
-
-    --secondary: 240 6% 15%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 6% 15%;
-    --muted-foreground: 240 5% 65%;
-
-    --accent: 280 85% 60%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 240 6% 20%;
-    --input: 240 6% 20%;
-    --ring: 262 83% 58%;
   }
 }
 
@@ -92,10 +66,35 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
   }
   
   html {
     scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .bg-gradient-subtle {
+    background: var(--gradient-subtle);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-hero bg-clip-text text-transparent;
   }
 }
