@@ -203,6 +203,17 @@ certificado en este entorno de desarrollo por no tener el dominio ni un servidor
 
 ---
 
+## 5. Configuración del repo
+
+- **Autor de los commits**: configurado localmente (no global) en este repo con
+  `git config user.name "Jose Juan Bruno"` y `git config user.email "bruno@comunica.com"`.
+  Los commits nuevos ya usan este autor automáticamente sin tener que especificarlo cada vez.
+- **Nombre de la empresa**: en toda la web (Footer, Aviso Legal, Cookies, JSON-LD de `index.html`,
+  README) se usa **"COMUNICA"** en vez de "Comunica Soluciones S.L." — cambio solicitado
+  explícitamente, incluida la "Denominación Social" del Aviso Legal.
+
+---
+
 ## Notas de sesión / historial relevante
 
 - Commits previos muestran que el CTA principal pasó de decir "Gratis" a "Demo" (`35e1c0d`), y que
@@ -213,3 +224,7 @@ certificado en este entorno de desarrollo por no tener el dominio ni un servidor
 - Sesión 2026-07-08 (parte 2): stack de despliegue Docker con Nginx + Certbot para `iandrea.ai`
   (sección 4). Commiteado y pusheado (`00b6037`). Este `CLAUDE.md` debe mantenerse actualizado en
   cada sesión que toque el proyecto — no dejarlo desincronizado del estado real del repo.
+- Sesión 2026-07-09: fix de `init-letsencrypt.sh` (`--no-deps`, evitaba que `docker compose run`
+  disparase también el contenedor `certbot` en bucle y agotase el rate limit de Let's Encrypt),
+  cambio de nombre "Comunica Soluciones S.L." → "COMUNICA" en toda la web, favicon cambiado a SVG,
+  y configuración del autor de commits (sección 5). Todo commiteado y pusheado.
