@@ -19,10 +19,10 @@ const AvisoLegal = () => {
           
           <h2 className="text-2xl font-semibold text-white mt-8 mb-4">1. Datos Identificativos</h2>
           <p>
-            El presente portal web "iAndrea" es un producto desarrollado y operado por <strong>Comunica Soluciones S.L.</strong> (en adelante, "Comunica").
+            El presente portal web "iAndrea" es un producto desarrollado y operado por <strong>COMUNICA</strong> (en adelante, "Comunica").
           </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Denominación Social:</strong> Comunica Soluciones S.L.</li>
+            <li><strong>Denominación Social:</strong> COMUNICA</li>
             <li><strong>Sitio Web Matriz:</strong> <a href="https://www.comunica.com/aviso-legal/" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">https://www.comunica.com</a></li>
           </ul>
 

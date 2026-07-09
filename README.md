@@ -1,7 +1,7 @@
 # iAndrea — Landing page
 
 Landing page del producto **iAndrea**, un agente de voz con IA para automatizar la atención
-telefónica (recepción, reservas, soporte, ventas), operado por Comunica Soluciones S.L.
+telefónica (recepción, reservas, soporte, ventas), operado por COMUNICA.
 
 ## Stack
 

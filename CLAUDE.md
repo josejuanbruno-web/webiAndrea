@@ -3,7 +3,7 @@
 ## Qué es esto
 
 Landing page de una sola página (SPA) para **iAndrea**, un producto de voz/agente IA para automatizar
-llamadas telefónicas (recepción, reservas, soporte, ventas), operado por **Comunica Soluciones S.L.**
+llamadas telefónicas (recepción, reservas, soporte, ventas), operado por **COMUNICA**
 (dominio matriz `comunica.com`). Dominio de producción previsto: `iandrea.ai` (ver `robots.txt` /
 `sitemap.xml`, aún apuntan ahí aunque no esté desplegado todavía).
 

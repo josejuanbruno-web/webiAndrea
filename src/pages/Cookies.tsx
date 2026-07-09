@@ -14,7 +14,7 @@ const Cookies = () => {
         <h1 className="text-4xl font-bold text-white mb-8">Política de Cookies</h1>
         <div className="prose prose-invert max-w-none text-slate-300 space-y-6">
           <p>
-            El sitio web de iAndrea (producto de Comunica Soluciones S.L.) utiliza cookies propias y de terceros para mejorar la experiencia del usuario, ofrecer contenidos personalizados y analizar el tráfico de la web.
+            El sitio web de iAndrea (producto de COMUNICA) utiliza cookies propias y de terceros para mejorar la experiencia del usuario, ofrecer contenidos personalizados y analizar el tráfico de la web.
           </p>
           
           <h2 className="text-2xl font-semibold text-white mt-8 mb-4">¿Qué son las cookies?</h2>

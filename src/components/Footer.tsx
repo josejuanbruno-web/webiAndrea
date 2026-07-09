@@ -41,7 +41,7 @@ export const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-slate-700/50 flex flex-col md:flex-row justify-between items-center text-slate-400 text-sm gap-4">
-          <p>© {new Date().getFullYear()} iAndrea (Comunica Soluciones S.L.). Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} iAndrea (COMUNICA). Todos los derechos reservados.</p>
           <div className="flex gap-4">
             <Link to="/aviso-legal" className="hover:text-cyan-400 transition-colors">Aviso Legal</Link>
             <Link to="/cookies" className="hover:text-cyan-400 transition-colors">Política de Cookies</Link>
