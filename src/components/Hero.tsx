@@ -55,7 +55,7 @@ export const Hero = () => {
                 variant="outline"
                 className="text-lg px-8 hover:border-primary hover:bg-primary/5 transition-all"
               >
-                <a href="https://www.youtube.com/watch?v=94Lp6Zbwv7Y" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.youtube.com/shorts/pr4QRKnOHL8" target="_blank" rel="noopener noreferrer">
                   Ver Demo en Vivo
                 </a>
               </Button>

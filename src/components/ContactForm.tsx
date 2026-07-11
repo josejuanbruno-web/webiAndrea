@@ -60,7 +60,7 @@ export const ContactForm = () => {
 
     try {
       const response = await fetch(
-        "https://services.thehotels.tv/webhook/pruebazammad2",
+        "https://services.thehotels.tv/webhook/landingapageiAndrea",
         {
           method: "POST",
           headers: {
