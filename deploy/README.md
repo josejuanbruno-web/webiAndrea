@@ -61,3 +61,34 @@ docker compose logs -f certbot     # logs de certbot
 docker compose ps                  # estado de los servicios
 docker compose down                # parar todo (los certificados persisten en el volumen)
 ```
+
+## Servicio OTP (addon otp-service en `otp.iandrea.ai`)
+
+El nginx de este stack hace de proxy TLS para el addon [otp-service](https://github.com/josejuanbruno-web/otp-service)
+(validación de teléfonos por SMS del formulario). Para añadirlo a un servidor que ya está sirviendo
+iandrea.ai:
+
+```sh
+# 1. DNS: crear el A record otp.iandrea.ai → IP de este servidor (antes de seguir).
+
+# 2. Red compartida entre ambos stacks (una vez por servidor):
+docker network create edge
+
+# 3. Ampliar el certificado existente con el nuevo subdominio (una vez):
+docker compose run --rm --no-deps \
+  --entrypoint "certbot certonly --webroot --webroot-path=/var/www/certbot --email $CERTBOT_EMAIL --agree-tos --no-eff-email -d iandrea.ai -d www.iandrea.ai -d otp.iandrea.ai --expand" \
+  certbot
+
+# 4. Recargar este stack con la config nueva (server block otp.iandrea.ai + red edge):
+git pull
+docker compose up -d --build
+
+# 5. Clonar y arrancar el otp-service (ver su propio README para configurarlo):
+git clone <repo-otp-service> && cd otp-service
+cp .env.example .env && cp config/sites.example.yml config/sites.yml
+# editar .env (secreto) y sites.yml (webhooks n8n reales)
+docker compose up -d --build
+```
+
+En instalaciones desde cero no hace falta el paso 3: `init-letsencrypt.sh` ya emite el certificado
+con los tres dominios.

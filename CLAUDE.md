@@ -203,6 +203,31 @@ certificado en este entorno de desarrollo por no tener el dominio ni un servidor
 
 ---
 
+## 4b. Validación OTP del formulario (addon otp-service, sesión 2026-07-13)
+
+El formulario de contacto ya **no envía el lead directamente al webhook n8n**: primero valida el
+móvil con un código SMS a través del addon **[otp-service](../otp-service)** (repo hermano,
+`../otp-service`, con su propio CLAUDE.md y README — consultar allí API, contrato n8n y despliegue).
+
+- `ContactForm.tsx` es ahora un flujo en dos pasos: formulario → `POST otp.iandrea.ai/v1/otp/request`
+  (envía SMS vía n8n) → vista de código de 6 dígitos con reenvío (cooldown 60s) y "cambiar teléfono"
+  → `POST /v1/otp/verify` con el código + los datos del lead. El servicio entrega el lead verificado
+  a n8n, que envía el email resumen. Constantes en el propio componente: `OTP_API_URL`
+  (`VITE_OTP_API_URL` en dev, fallback `https://otp.iandrea.ai`) y `SITE_ID = "iandrea"`.
+- **La URL del webhook n8n ya no está en el bundle del navegador** (verificado con grep sobre
+  `dist/`): resuelve el pendiente de seguridad de la sección 1. La URL vive ahora en el
+  `config/sites.yml` del servidor del otp-service.
+- Cambios de infra en este repo: bloque `server` para `otp.iandrea.ai` en `deploy/nginx.conf`
+  (con `resolver 127.0.0.11` + variable para que nginx arranque aunque el contenedor `otp` no
+  exista), red externa `edge` en `docker-compose.yml`, y `otp.iandrea.ai` añadido a los scripts
+  de certbot (`--expand`). Pasos de despliegue en `deploy/README.md`, sección "Servicio OTP".
+- **Pendiente para activarlo en producción**: A record `otp.iandrea.ai` → IP del servidor; crear
+  los 2 workflows n8n (SMS y lead verificado) validando el header `X-OTP-Service-Secret`; ampliar
+  el certificado con `--expand`; desplegar ambos stacks. Hasta entonces la web en producción no
+  debe actualizarse a este commit (el formulario apuntaría a un subdominio que aún no existe).
+
+---
+
 ## 5. Configuración del repo
 
 - **Autor de los commits**: configurado localmente (no global) en este repo con
@@ -228,3 +253,8 @@ certificado en este entorno de desarrollo por no tener el dominio ni un servidor
   disparase también el contenedor `certbot` en bucle y agotase el rate limit de Let's Encrypt),
   cambio de nombre "Comunica Soluciones S.L." → "COMUNICA" en toda la web, favicon cambiado a SVG,
   y configuración del autor de commits (sección 5). Todo commiteado y pusheado.
+- Sesión 2026-07-11: URL del vídeo de demo actualizada (Hero + CTA) y webhook del formulario
+  cambiado a `landingapageiAndrea`. Sesión 2026-07-13: nueva URL de demo (`youtu.be/k-5RIOFANAY`)
+  y creación del addon **otp-service** con el formulario en dos pasos (sección 4b) — probado E2E
+  en local con Docker (SMS y lead simulados con un webhook de eco); queda pendiente la validación
+  visual en navegador y la puesta en producción (DNS + n8n + certificado).

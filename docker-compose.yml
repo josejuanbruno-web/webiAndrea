@@ -12,6 +12,9 @@ services:
       - certbot-webroot:/var/www/certbot:ro
     depends_on:
       - certbot
+    networks:
+      - default
+      - edge
     # Nginx recarga la config cada 6h para recoger el certificado renovado
     command: >
       sh -c "while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
@@ -30,3 +33,10 @@ services:
 volumes:
   certbot-conf:
   certbot-webroot:
+
+networks:
+  # Red compartida con el addon otp-service (crear una vez por servidor:
+  #   docker network create edge
+  # ). El nginx de este stack llega al contenedor "otp" a través de ella.
+  edge:
+    external: true
