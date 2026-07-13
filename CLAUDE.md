@@ -221,10 +221,11 @@ móvil con un código SMS a través del addon **[otp-service](../otp-service)** 
   (con `resolver 127.0.0.11` + variable para que nginx arranque aunque el contenedor `otp` no
   exista), red externa `edge` en `docker-compose.yml`, y `otp.iandrea.ai` añadido a los scripts
   de certbot (`--expand`). Pasos de despliegue en `deploy/README.md`, sección "Servicio OTP".
-- **Pendiente para activarlo en producción**: A record `otp.iandrea.ai` → IP del servidor; crear
-  los 2 workflows n8n (SMS y lead verificado) validando el header `X-OTP-Service-Secret`; ampliar
-  el certificado con `--expand`; desplegar ambos stacks. Hasta entonces la web en producción no
-  debe actualizarse a este commit (el formulario apuntaría a un subdominio que aún no existe).
+- **Pendiente para activarlo en producción**: ~~A record~~ (hecho 2026-07-13, confirma el usuario);
+  workflows n8n ya existentes en `services.thehotels.tv/webhook/enviosms` y `…/enviomails` (falta
+  que validen el header `X-OTP-Service-Secret`); ampliar el certificado con `--expand`; desplegar
+  ambos stacks. Hasta entonces la web en producción no debe actualizarse a este commit (el
+  formulario apuntaría a un subdominio sin servicio detrás).
 
 ---
 
