@@ -27,7 +27,7 @@ export const Footer = () => {
             <ul className="space-y-2 text-slate-300">
               <li><a href="/#beneficios" className="hover:text-cyan-400 transition-colors">Características</a></li>
               <li><a href="/#industrias" className="hover:text-cyan-400 transition-colors">Casos de uso</a></li>
-              <li><a href="/#contacto" className="hover:text-cyan-400 transition-colors">Solicita una demo</a></li>
+              <li><a href="/#contacto" className="hover:text-cyan-400 transition-colors">Ponte en contacto con nosotros</a></li>
             </ul>
           </div>
 

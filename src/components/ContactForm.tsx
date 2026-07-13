@@ -27,7 +27,7 @@ const formSchema = z.object({
   name: z.string().min(2, "El nombre debe tener al menos 2 caracteres").max(100),
   email: z.string().email("Email inválido").max(255),
   phone: z.string().min(9, "Teléfono inválido").max(20),
-  company: z.string().max(100).optional(),
+  company: z.string().min(2, "Indica el nombre de tu empresa").max(100),
   message: z.string().max(500).optional(),
   consent: z.literal(true, {
     errorMap: () => ({ message: "Debes aceptar la política de privacidad para continuar" }),
@@ -272,7 +272,7 @@ export const ContactForm = () => {
                   name="company"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Empresa (opcional)</FormLabel>
+                      <FormLabel>Empresa *</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -345,12 +345,12 @@ export const ContactForm = () => {
                   disabled={isSubmitting}
                   className="w-full bg-gradient-hero hover:shadow-glow transition-all text-lg group"
                 >
-                  {isSubmitting ? "Enviando SMS..." : "Solicitar Demo Personalizada"}
+                  {isSubmitting ? "Enviando SMS..." : "Solicitar información"}
                   <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform" />
                 </Button>
 
                 <p className="text-sm text-muted-foreground text-center">
-                  Verificaremos tu móvil con un SMS • Respuesta en menos de 24 horas • Sin compromiso
+                  Verificaremos tu móvil con un SMS • Respuesta en menos de 48 horas • Sin compromiso
                 </p>
               </form>
             </Form>

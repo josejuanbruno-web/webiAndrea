@@ -144,7 +144,7 @@ ya que estuvo expuesta en el historial de un repo público.
 ## 2. Otras mejoras de marketing/conversión no aplicadas (requieren copy o assets nuevos)
 
 - Ningún calendario de reserva directa (Calendly/Cal.com) — solo el formulario de contacto con
-  respuesta prometida en 24h. Bajaría fricción si se quiere apostar fuerte por conversión.
+  respuesta prometida en 48h. Bajaría fricción si se quiere apostar fuerte por conversión.
 - Ninguna oferta de lanzamiento/urgencia ("primeras N empresas", "piloto de 30 días").
 - El `<title>`/meta describen "automatización de llamadas" de forma clara, pero el Hero usa lenguaje
   muy técnico ("Agente Autónomo de Voz Multimodal", "modelos fundacionales") — vale la pena unificar
@@ -259,3 +259,11 @@ móvil con un código SMS a través del addon **[otp-service](../otp-service)** 
   y creación del addon **otp-service** con el formulario en dos pasos (sección 4b) — probado E2E
   en local con Docker (SMS y lead simulados con un webhook de eco); queda pendiente la validación
   visual en navegador y la puesta en producción (DNS + n8n + certificado).
+- Sesión 2026-07-14: **OTP desplegado en producción y funcionando** (workflow n8n importado con
+  secreto, certificado ampliado a `otp.iandrea.ai`, ambos stacks corriendo; hubo que configurar
+  `~/.ssh/config` en el servidor porque la clave se llama `id_ed25519_github` y SSH no la ofrecía).
+  Cambios de copy: campo Empresa ahora obligatorio (solo en el formulario; la API del otp-service
+  lo mantiene opcional para no imponerlo a otras landings), "Solicita una demo"/"Solicitar Demo
+  Personalizada" → "Solicita información" (Navbar/formulario) y "Ponte en contacto con nosotros"
+  (Footer), y "menos de 24 horas" → "48 horas" (formulario y email n8n — **el texto del email hay
+  que actualizarlo también a mano en el workflow n8n ya importado**).

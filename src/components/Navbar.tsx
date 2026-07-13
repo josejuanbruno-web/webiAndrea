@@ -35,7 +35,7 @@ export const Navbar = () => {
             </a>
             
             <Button asChild className="bg-gradient-hero hover:shadow-glow transition-all">
-              <a href="/#contacto">Solicita una demo</a>
+              <a href="/#contacto">Solicita información</a>
             </Button>
           </div>
 
@@ -77,7 +77,7 @@ export const Navbar = () => {
             <div className="px-4">
               <Button asChild className="w-full bg-gradient-hero">
                 <a href="/#contacto" onClick={() => setIsOpen(false)}>
-                  Solicita una demo
+                  Solicita información
                 </a>
               </Button>
             </div>
