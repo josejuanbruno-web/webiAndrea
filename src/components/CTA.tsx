@@ -40,7 +40,7 @@ export const CTA = () => {
               className="text-lg px-10 hover:border-primary transition-all"
               asChild
             >
-              <a href="https://www.youtube.com/shorts/pr4QRKnOHL8" target="_blank" rel="noopener noreferrer">
+              <a href="https://youtu.be/k-5RIOFANAY" target="_blank" rel="noopener noreferrer">
                 Ver Demo en Vivo
               </a>
             </Button>
