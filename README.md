@@ -46,4 +46,11 @@ export CERTBOT_EMAIL=tu-email@ejemplo.com
 docker compose up -d --build   # despliegues siguientes
 ```
 
+## Formulario de contacto (OTP)
+
+El formulario valida el móvil por SMS a través del addon
+[otp-service](https://github.com/josejuanbruno-web/otp-service) (repo privado, desplegado en
+`otp.iandrea.ai`). Para probar el flujo en local, crea un `.env.local` con
+`VITE_OTP_API_URL=http://localhost:18080` y levanta el addon con Docker (ver su README).
+
 Más contexto del proyecto, decisiones y pendientes en [CLAUDE.md](./CLAUDE.md).

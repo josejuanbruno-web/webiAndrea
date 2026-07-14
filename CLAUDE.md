@@ -111,14 +111,14 @@ ya que estuvo expuesta en el historial de un repo público.
 
 ## 1. Pendiente de decisión del usuario (no resuelto por la limpieza, requiere input del negocio)
 
-- **Webhook de contacto**: `https://services.thehotels.tv/webhook/pruebazammad2` — el nombre sugiere
-  endpoint de pruebas ("prueba" + "zammad"), y el dominio (`thehotels.tv`) no tiene relación aparente
-  con iAndrea/Comunica. Confirmar si es el endpoint de producción correcto antes de publicar. Sigue
-  expuesto en el bundle cliente (visible para cualquiera, sin autenticación) — si se quiere ocultarlo
-  de verdad, hace falta un backend/serverless propio que actúe de proxy (ver alternativas más abajo).
-- **Repo público en GitHub**: `github.com/josejuanbruno-web/webiAndrea` — verificar visibilidad;
-  si es público, la URL del webhook es (y ha sido desde el commit `7c90c4f`) visible en el historial
-  aunque se cambie ahora.
+- ~~**Webhook de contacto**~~ **RESUELTO (2026-07-13/14)**: el formulario ya no llama a ningún
+  webhook desde el navegador — pasa por el addon otp-service (sección 4b), que actúa de proxy
+  server-side. Las URLs n8n reales viven en el `config/sites.yml` del servidor (repo otp-service,
+  privado). Queda como nota histórica: el webhook antiguo (`pruebazammad2`, luego
+  `landingapageiAndrea`) estuvo expuesto en el bundle y en el historial de este repo público.
+- **Repo público en GitHub**: `github.com/josejuanbruno-web/webiAndrea` es **público** (verificado
+  2026-07-13 vía API). Las URLs de webhooks antiguas siguen visibles en el historial — ya no son un
+  riesgo activo si los workflows n8n validan el header secreto, pero no publicar nunca secretos aquí.
 - **Teléfono/email de contacto real**: no hay ningún dato de contacto directo en la web, solo el
   formulario. ¿Existe ya uno que se pueda mostrar?
 - **Dominio**: confirmado como `iandrea.ai` (usado en `sitemap.xml`, `robots.txt`, metadatos OG de
@@ -221,11 +221,11 @@ móvil con un código SMS a través del addon **[otp-service](../otp-service)** 
   (con `resolver 127.0.0.11` + variable para que nginx arranque aunque el contenedor `otp` no
   exista), red externa `edge` en `docker-compose.yml`, y `otp.iandrea.ai` añadido a los scripts
   de certbot (`--expand`). Pasos de despliegue en `deploy/README.md`, sección "Servicio OTP".
-- **Pendiente para activarlo en producción**: ~~A record~~ (hecho 2026-07-13, confirma el usuario);
-  workflows n8n ya existentes en `services.thehotels.tv/webhook/enviosms` y `…/enviomails` (falta
-  que validen el header `X-OTP-Service-Secret`); ampliar el certificado con `--expand`; desplegar
-  ambos stacks. Hasta entonces la web en producción no debe actualizarse a este commit (el
-  formulario apuntaría a un subdominio sin servicio detrás).
+- **EN PRODUCCIÓN desde 2026-07-14**: A record, workflow n8n (con validación del header
+  `X-OTP-Service-Secret`), certificado ampliado con `--expand` y ambos stacks desplegados y
+  verificados con SMS y emails reales. Los webhooks n8n de producción son
+  `services.thehotels.tv/webhook/enviosms` y `…/enviomails`. Despliegues rutinarios: `git pull`
+  + `docker compose up -d --build` en el repo que cambie (los dos stacks son independientes).
 
 ---
 

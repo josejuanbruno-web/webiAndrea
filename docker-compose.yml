@@ -10,8 +10,10 @@ services:
     volumes:
       - certbot-conf:/etc/letsencrypt:ro
       - certbot-webroot:/var/www/certbot:ro
-    depends_on:
-      - certbot
+    # Sin depends_on hacia certbot a propósito: no garantiza que el certificado
+    # exista (solo ordena arranques) y provocaba que `docker compose run web`
+    # arrancara también certbot en bucle (incidente del rate limit de Let's
+    # Encrypt en el primer despliegue). `up -d` arranca ambos igualmente.
     networks:
       - default
       - edge
